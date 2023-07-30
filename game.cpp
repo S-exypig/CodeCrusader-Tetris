@@ -75,11 +75,24 @@ void game::exitgame()
 // 初始化游戏参数，包括绘出panel，准备随机方块，画出最高分，画出现有分0,准备随机种子
 void game::init()
 {
-	nextGraph = new BlockFactory();
-	nextGraph->draw();
-	nextGraph->setLocate(1,7);
+	initgraph(BG_WIDTH, BG_HEIGHT);
+	IMAGE bg_img;
+	loadimage(&bg_img, "BackGroundPath");
+	// panel的方块工厂还不知道在哪初始化
+	//nextGraph = new BlockFactory();
+	//nextGraph->draw();
+	//nextGraph->setLocate(1, 7);
+	panel* p = new panel();
+	// 随机创建方块
+	p->createCube();
+	// 画出最高分
+	settextstyle(SCORE_HEIGHT, SCORE_WIDTH, _T("TEXT_STYLE"));
+	char max_score[20];
+	sprintf(max_score, "最高分：%d", MAX_SCORE);
+	outtextxy(MAX_SCORE_X, MAX_SCORE_Y, _T(max_score));
+	//画出现有分
+	outtextxy(NOW_SCORE_X, NOW_SCORE_Y, _T("当前分数: 0"));
 
-	createCube();
 }
 // 随机函数，用于生成随机方块,init专用
 string random()
